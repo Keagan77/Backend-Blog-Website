@@ -21,8 +21,20 @@ class BlogController extends Controller
     }
 
     // This method will return a single blog
-    public function show(){
+    public function show($id){
+        $blog = Blog::find($id);
 
+        if($blog == null){
+            return response()->json([
+                'status'=>false,
+                'message'=>'Blog Not Found!'
+            ]);
+        }
+
+        return response()->json([
+            'status'=>true,
+            'data'=>$blog
+        ]);
     }
 
     // This method will store a blog
