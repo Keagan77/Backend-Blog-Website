@@ -1,3 +1,12 @@
-# PART 8 API Integration
-
-# 
+PART 1 - DONE ✔
+PART 2 - DONE ✔
+PART 3 - DONE ✔
+PART 4 - DONE ✔
+PART 5 - DONE ✔
+PART 6 - DONE ✔
+PART 7 - DONE ✔
+PART 8 - DONE ✔
+PART 9 - ONGOING
+PART 10 -
+PART 11
+PART 12
