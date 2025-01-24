@@ -7,6 +7,6 @@
 # PART 7 - DONE ✔
 # PART 8 - DONE ✔
 # PART 9 - DONE ✔
-# PART 10 -
-# PART 11
-# PART 12
+# PART 10 - DONE ✔
+# PART 11 -
+# PART 12 -
