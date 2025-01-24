@@ -68,6 +68,10 @@ class BlogController extends Controller
         $tempImage = TempImage::find($request->image_id);
 
         if($tempImage != null){
+
+            // Delete Old Image here
+
+            File::delete(public_path('uploads/blogs'.$blog->image));
             $imageExtArray = explode(".", $tempImage->name);
             $ext = last($imageExtArray);
             $imageName = time().'-'.$blog->id.'.'.$ext;
@@ -86,10 +90,59 @@ class BlogController extends Controller
             'data'=>$blog
         ]);
     }
-    
 
     // This method will update the blog
-    public function update(){
+    public function update($id, Request $request){
+
+        $blog = Blog::find($id);
+        if($blog == null){
+            return response()->json([
+                'status'=>false,
+                'message'=>'Blog not found!'
+            ]);
+        }
+        
+        $validator = Validator::make($request->all(), [
+            'title' => 'required',
+            'author'=> 'required'
+        ]);
+    
+        if($validator->fails()){
+            return response()->json([
+                'status'=>false,
+                'message'=>'Validation failed',
+                'errors'=>$validator->errors()
+            ]);
+        }
+
+        $blog->title = $request->title;
+        $blog->author = $request->author;
+        $blog->description = $request->description;
+        $blog->shortDesc = $request->shortDesc;
+        $blog->save();
+
+        // Save Image here
+
+        $tempImage = TempImage::find($request->image_id);
+
+        if($tempImage != null){
+            $imageExtArray = explode(".", $tempImage->name);
+            $ext = last($imageExtArray);
+            $imageName = time().'-'.$blog->id.'.'.$ext;
+
+            $blog->image = $imageName;
+            $blog->save();
+
+            $sourcePath = public_path("uploads/temp/".$tempImage->name);
+            $destPath = public_path("uploads/blogs/".$imageName);
+            File::copy($sourcePath,$destPath);
+        }
+    
+        return response()->json([
+            'status'=> true,
+            'message'=>'Blog Updated successfully',
+            'data'=>$blog
+        ]);
 
     }
 
